@@ -82,7 +82,8 @@ const GetIntegrationWrapper = styled.div`
 const GetIntegrationIcons = styled.div`
   display: flex;
   div {
-    padding: 0 0.5rem;
+    margin: 0 0.5rem;
+    cursor: pointer;
   }
 `;
 export {
