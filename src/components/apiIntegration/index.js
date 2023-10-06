@@ -55,6 +55,16 @@ export default function ApiIntegration() {
     fetchData();
   }, []);
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+      const updatedData = newData.filter((item) => item.id !== id);
+      setNewData(updatedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <ApiIntegrationWrapper>
       <h3>API Integration</h3>
@@ -68,6 +78,7 @@ export default function ApiIntegration() {
         newData={newData}
         setSelectedItem={setSelectedItem}
         setPostData={setPostData}
+        handleDelete={handleDelete}
       />
     </ApiIntegrationWrapper>
   );

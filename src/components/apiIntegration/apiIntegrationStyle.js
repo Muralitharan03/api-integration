@@ -79,4 +79,15 @@ const GetIntegrationWrapper = styled.div`
   flex-direction: column;
   align-items: end;
 `;
-export { ApiIntegrationWrapper, PostIntegrationWrapper, GetIntegrationWrapper };
+const GetIntegrationIcons = styled.div`
+  display: flex;
+  div {
+    padding: 0 0.5rem;
+  }
+`;
+export {
+  ApiIntegrationWrapper,
+  PostIntegrationWrapper,
+  GetIntegrationWrapper,
+  GetIntegrationIcons,
+};
