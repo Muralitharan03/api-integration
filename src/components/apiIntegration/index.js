@@ -10,7 +10,7 @@ export default function ApiIntegration() {
     title: "",
     body: "",
   });
-  console.log("newData", newData);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -20,7 +20,7 @@ export default function ApiIntegration() {
       const data = response.data;
       setNewData(data);
     } catch (error) {
-      // Handle any errors that occurred during the API request
+      console.error(error);
     }
   };
 
@@ -28,21 +28,27 @@ export default function ApiIntegration() {
     setPostData({ ...postData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+    let response;
     try {
-      const response = await axios.post(
-        "https://jsonplaceholder.typicode.com/posts",
-        postData
-      );
-      console.log(response.data);
-      if (response.status === 201) {
-        setNewData([response.data, ...newData]);
-        setPostData({ title: "", body: "" });
+      if (selectedItem) {
+        response = await axios.put(
+          `https://jsonplaceholder.typicode.com/posts/${selectedItem.id}`,
+          postData
+        );
+      } else {
+        response = await axios.post(
+          "https://jsonplaceholder.typicode.com/posts",
+          postData
+        );
       }
+      setNewData([response.data, ...newData]);
+      setPostData({ title: "", body: "" });
     } catch (error) {
-      // Handle any errors that occurred during the API request
+      console.error(error);
     }
+    setSelectedItem(null);
   };
 
   useEffect(() => {
@@ -54,10 +60,15 @@ export default function ApiIntegration() {
       <h3>API Integration</h3>
       <PostIntegration
         handleChange={handleChange}
-        handleSubmit={handleSubmit}
+        handleSubmit={handleFormSubmit}
         postData={postData}
+        selectedItem={selectedItem}
       />
-      <GetIntegration newData={newData} />
+      <GetIntegration
+        newData={newData}
+        setSelectedItem={setSelectedItem}
+        setPostData={setPostData}
+      />
     </ApiIntegrationWrapper>
   );
 }
