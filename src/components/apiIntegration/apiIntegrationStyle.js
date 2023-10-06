@@ -74,6 +74,9 @@ const PostIntegrationWrapper = styled.div`
 `;
 const GetIntegrationWrapper = styled.div`
   width: 90%;
-  margin: auto;
+  margin: 3rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
 `;
 export { ApiIntegrationWrapper, PostIntegrationWrapper, GetIntegrationWrapper };

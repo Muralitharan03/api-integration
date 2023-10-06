@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PostIntegrationWrapper } from "./apiIntegrationStyle";
 
 export default function PostIntegration(props) {
-  const { handleChange, handleSubmit, postData } = props;
+  const { handleChange, handleSubmit, postData, selectedItem } = props;
   const [formErrors, setFormErrors] = useState({});
 
   const handleValidation = () => {
@@ -44,7 +44,7 @@ export default function PostIntegration(props) {
           placeholder="Content"
         />
         {formErrors.body && <p>{formErrors.body}</p>}
-        <button type="submit">Submit</button>
+        <button type="submit">{selectedItem ? "Update" : "Submit"}</button>
       </form>
     </PostIntegrationWrapper>
   );
