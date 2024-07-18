@@ -53,6 +53,7 @@ export default function GetIntegration({
           <div key={item.id}>
             <h2>{item.title}</h2>
             <p>{item.body}</p>
+            {item.imageUrl && <img src={item.imageUrl} alt="uploaded-pic" />}
           </div>
         </>
       ))}

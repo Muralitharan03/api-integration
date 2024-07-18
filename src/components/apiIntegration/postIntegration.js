@@ -44,6 +44,8 @@ export default function PostIntegration(props) {
           placeholder="Content"
         />
         {formErrors.body && <p>{formErrors.body}</p>}
+        <label>Image</label>
+        <input type="file" name="image" onChange={handleChange} />
         <button type="submit">{selectedItem ? "Update" : "Submit"}</button>
       </form>
     </PostIntegrationWrapper>
