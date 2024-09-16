@@ -77,6 +77,20 @@ const GetIntegrationWrapper = styled.div`
   margin: 3rem auto;
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: start;
 `;
-export { ApiIntegrationWrapper, PostIntegrationWrapper, GetIntegrationWrapper };
+const GetIntegrationIcons = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: end;
+  div {
+    margin: 0 0.5rem;
+    cursor: pointer;
+  }
+`;
+export {
+  ApiIntegrationWrapper,
+  PostIntegrationWrapper,
+  GetIntegrationWrapper,
+  GetIntegrationIcons,
+};

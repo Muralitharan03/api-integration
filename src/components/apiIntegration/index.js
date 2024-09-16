@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import GetIntegration from "./getIntegration";
-import axios from "axios";
 import PostIntegration from "./postIntegration";
 import { ApiIntegrationWrapper } from "./apiIntegrationStyle";
 
@@ -14,10 +13,10 @@ export default function ApiIntegration() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
+      const response = await fetch(
         "https://jsonplaceholder.typicode.com/posts"
       );
-      const data = response.data;
+      const data = await response.json();
       setNewData(data);
     } catch (error) {
       console.error(error);
@@ -33,17 +32,30 @@ export default function ApiIntegration() {
     let response;
     try {
       if (selectedItem) {
-        response = await axios.put(
+        response = await fetch(
           `https://jsonplaceholder.typicode.com/posts/${selectedItem.id}`,
-          postData
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(postData),
+          }
         );
       } else {
-        response = await axios.post(
+        response = await fetch(
           "https://jsonplaceholder.typicode.com/posts",
-          postData
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(postData),
+          }
         );
       }
-      setNewData([response.data, ...newData]);
+      const responseData = await response.json();
+      setNewData([responseData, ...newData]);
       setPostData({ title: "", body: "" });
     } catch (error) {
       console.error(error);
@@ -54,6 +66,18 @@ export default function ApiIntegration() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+        method: "DELETE",
+      });
+      const updatedData = newData.filter((item) => item.id !== id);
+      setNewData(updatedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <ApiIntegrationWrapper>
@@ -68,6 +92,7 @@ export default function ApiIntegration() {
         newData={newData}
         setSelectedItem={setSelectedItem}
         setPostData={setPostData}
+        handleDelete={handleDelete}
       />
     </ApiIntegrationWrapper>
   );
